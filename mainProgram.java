@@ -10,15 +10,29 @@ public class mainProgram {
             int fileChoice = -1;
             fileChoice = Integer.parseInt(sc.nextLine());
 
-            // ========= COLOCAR A LEITURA DE ARQUIVO EM UMA FUNÇÃO SEPARADA DEPOIS =========
+            int[] params = new int[3];
+            Grafo grafo = criarGrafo(fileChoice, params);
+            int k = params[0];
+            int qntVertices = params[1];
+            int qntArestas = params[2];
 
+            grafo.print();
+
+            sc.close();
+        } catch (Exception e) {
+            System.out.println("Erro");
+            e.printStackTrace();
+        }
+    }
+
+    public static Grafo criarGrafo(int fileChoice, int[] params) {
+        try {
             String arq = "./grafos/pmed" + fileChoice + ".txt";
             File file = new File(arq);
 
             if (!file.exists() || !file.isFile()) {
                 System.out.println("Arquivo não encontrado: " + arq);
-                sc.close();
-                return;
+                return null;
             }
 
             Scanner sc_arq = new Scanner(file);
@@ -28,6 +42,10 @@ public class mainProgram {
             int qntVertices = Integer.parseInt(header_parts[0]);
             int qntArestas = Integer.parseInt(header_parts[1]);
             int k = Integer.parseInt(header_parts[2]);
+
+            params[0] = k;
+            params[1] = qntVertices;
+            params[2] = qntArestas;
 
             Grafo grafo = new Grafo(qntVertices);
 
@@ -41,15 +59,11 @@ public class mainProgram {
                 grafo.adicionar(origem, destino, peso);
             }
             sc_arq.close();
-
-            // ========= COLOCAR A LEITURA DE ARQUIVO EM UMA FUNÇÃO SEPARADA DEPOIS =========
-
-            grafo.print();
-
-            sc.close();
+            return grafo;
         } catch (Exception e) {
-            System.out.println("Erro");
+            System.out.println("Erro ao criar grafo");
             e.printStackTrace();
+            return null;
         }
     }
 }
