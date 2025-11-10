@@ -40,4 +40,13 @@ public class Grafo {
             System.out.println();
         }
     }
+
+    public void printListaAdjVertice(int v) {
+        List<Aresta> arestas = lista.get(v);
+        System.out.print("[" + v + "]: ");
+        for (Aresta vw : arestas) {
+            System.out.print("{" + vw.destino + ", " + vw.peso + "} ");
+        }
+        System.out.println();
+    }
 }
