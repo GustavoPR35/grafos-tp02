@@ -16,7 +16,22 @@ public class mainProgram {
             int qntVertices = params[1];
             int qntArestas = params[2];
 
-            grafo.print();
+            // grafo.print();
+
+            long startTime = System.currentTimeMillis();
+
+            int[][] dist = grafo.getMatrizAdjacencia();
+            utils.floydWarshall(dist);
+
+            int[] centers = exactSolution.solveKCenterExact(dist, k);
+            System.out.print("Centros escolhidos: ");
+            for (int c : centers) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
+
+            long endTime = System.currentTimeMillis();
+            System.out.println("Tempo de execução: " + (endTime - startTime) + " ms");
 
             sc.close();
         } catch (Exception e) {

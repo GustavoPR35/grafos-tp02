@@ -31,6 +31,30 @@ public class Grafo {
         lista.get(destino).add(new Aresta(origem, peso));
     }
 
+    public int[][] getMatrizAdjacencia() {
+        int n = lista.size();
+        int[][] matriz = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    matriz[i][j] = 0;
+                } else {
+                    matriz[i][j] = (int)1e8;
+                }
+            }
+        }
+
+        for (Entry<Integer, List<Aresta>> v : lista.entrySet()) {
+            int origem = v.getKey();
+            for (Aresta vw : v.getValue()) {
+                matriz[origem-1][vw.destino-1] = vw.peso;
+            }
+        }
+
+        return matriz;
+    }
+
     public void print() {
         for (Entry<Integer, List<Aresta>> v : lista.entrySet()) {
             System.out.print("[" + v.getKey() + "]: ");
