@@ -31,6 +31,7 @@ public class Grafo {
         lista.get(destino).add(new Aresta(origem, peso));
     }
 
+    // começa de 0
     public int[][] getMatrizAdjacencia() {
         int n = lista.size();
         int[][] matriz = new int[n][n];
