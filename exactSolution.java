@@ -27,26 +27,6 @@ public class exactSolution {
     }
 
     /**
-     * Calcula o raio para uma dada combinação de centros.
-     * @param dist matriz de distâncias
-     * @param centers combinação atual de centros
-     * @return raio da combinação atual de centros
-     */
-    private static int computeRadius(int[][] dist, int[] centers) {
-        int n = dist.length;
-        int radius = 0;
-
-        for (int v = 0; v < n; v++) {
-            int minDist = Integer.MAX_VALUE;
-            for (int c : centers)
-                minDist = Math.min(minDist, dist[v][c]);
-            radius = Math.max(radius, minDist);
-        }
-
-        return radius;
-    }
-
-    /**
      * Gera todas as combinações possíveis de k centros e avalia o raio para cada combinação.
      * @param dist matriz de distâncias
      * @param centers combinação atual de centros
@@ -63,7 +43,7 @@ public class exactSolution {
             //     System.out.print(c + " ");
             // }
             // System.out.println();
-            int radius = computeRadius(dist, centers);
+            int radius = utils.computeRadius(dist, centers);
             if (radius < best.radius) {
                 best.radius = radius;
                 best.centers = centers.clone();

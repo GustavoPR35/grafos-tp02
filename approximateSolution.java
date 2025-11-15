@@ -61,34 +61,9 @@ public class approximateSolution {
         }
 
         // Calcula o raio final da solução
-        int radius = computeRadius(dist, centers);
+        int radius = utils.computeRadius(dist, centers);
         System.out.println("Melhor raio (aproximado): " + radius);
 
         return centers;
-    }
-
-    /**
-     * Calcula o raio para uma dada combinação de centros.
-     * O raio é a maior distância de qualquer vértice ao seu centro mais próximo.
-     * 
-     * @param dist matriz de distâncias
-     * @param centers combinação de centros
-     * @return raio da combinação de centros
-     */
-    private static int computeRadius(int[][] dist, int[] centers) {
-        int n = dist.length;
-        int radius = 0;
-
-        // Para cada vértice, encontra a distância ao centro mais próximo
-        for (int v = 0; v < n; v++) {
-            int minDist = Integer.MAX_VALUE;
-            for (int c : centers) {
-                minDist = Math.min(minDist, dist[v][c]);
-            }
-            // O raio é a maior dessas distâncias mínimas
-            radius = Math.max(radius, minDist);
-        }
-
-        return radius;
     }
 }
