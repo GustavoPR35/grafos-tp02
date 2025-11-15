@@ -26,8 +26,6 @@ public class approximateSolution {
             minDistToCenter[i] = Integer.MAX_VALUE;
         }
 
-        System.out.println("Executando algoritmo de Gonzalez (aproximação 2-ótima)...\n");
-
         // Escolhe o primeiro centro arbitrariamente (vértice 0)
         centers[0] = 0;
         isCenter[0] = true;
