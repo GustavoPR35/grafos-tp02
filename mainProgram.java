@@ -6,14 +6,14 @@ public class mainProgram {
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(System.in);
-            
+
             Grafo grafo;
             int[] params = new int[3];
             while (true) {
                 System.out.print("Escolha um número de pmed entre 1 e 40 (0 para encerrar): ");
                 int fileChoice = -1;
                 fileChoice = Integer.parseInt(sc.nextLine());
-                
+
                 grafo = criarGrafo(fileChoice, params);
                 if (grafo != null) {
                     break;
@@ -24,20 +24,36 @@ public class mainProgram {
             int qntVertices = params[1];
             int qntArestas = params[2];
 
-            BigInteger totalCombinations = utils.nCr(qntVertices, k);
-            System.out.println("Total de combinações de " + k + " centros entre " + qntVertices + " vértices: " + totalCombinations + "\n");
+            // Pergunta ao usuário qual solução deseja executar
+            System.out.println("Escolha o tipo de solução:");
+            System.out.println("1 - Solução Exata");
+            System.out.println("2 - Solução Aproximada (Algoritmo de Gonzalez)");
+            System.out.print("Opção: ");
+            int opcao = Integer.parseInt(sc.nextLine());
+            System.out.println();
 
-            long startTime = System.currentTimeMillis();
-
-            //long FWstartTime = System.currentTimeMillis();
-
+            // Calcula Floyd-Warshall (necessário para ambas as soluções)
             int[][] dist = grafo.getMatrizAdjacencia();
             utils.floydWarshall(dist);
 
-            //long FWendTime = System.currentTimeMillis();
-            //System.out.println("Tempo de execução do Floyd-Warshall: " + (FWendTime - FWstartTime) + " ms\n");
+            int[] centers = null;
+            long startTime = System.currentTimeMillis();
 
-            int[] centers = exactSolution.solveKCenterExact(dist, k);
+            if (opcao == 1) {
+                // Solução Exata
+                BigInteger totalCombinations = utils.nCr(qntVertices, k);
+                System.out.println("Total de combinações de " + k + " centros entre " + qntVertices + " vértices: "
+                        + totalCombinations + "\n");
+
+                centers = exactSolution.solveKCenterExact(dist, k);
+            } else if (opcao == 2) {
+                // Solução Aproximada
+                centers = approximateSolution.solveKCenterApproximate(dist, k);
+            } else {
+                System.out.println("Opção inválida!");
+                sc.close();
+                return;
+            }
 
             long endTime = System.currentTimeMillis();
 
