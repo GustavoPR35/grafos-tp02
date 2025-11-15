@@ -18,8 +18,6 @@ public class exactSolution {
     public static int[] solveKCenterExact(int[][] dist, int k) {
         Best best = new Best();
 
-        System.out.println("Calculando todas as combinações possíveis de centros...\n");
-
         combinationEvaluate(dist, new int[k], 1, dist.length, 0, k, best);
         System.out.println("Melhor raio: " + best.radius);
         // System.out.println("Número de iterações: " + iterations + "\n");

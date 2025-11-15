@@ -1,5 +1,5 @@
 import java.io.File;
-import java.math.BigInteger;
+// import java.math.BigInteger;
 import java.util.Scanner;
 
 public class mainProgram {
@@ -10,9 +10,15 @@ public class mainProgram {
             Grafo grafo;
             int[] params = new int[3];
             while (true) {
-                System.out.print("Escolha um número de pmed entre 1 e 40 (0 para encerrar): ");
+                System.out.print("Escolha uma instância entre 1 e 40 (0 para encerrar): ");
                 int fileChoice = -1;
                 fileChoice = Integer.parseInt(sc.nextLine());
+
+                if (fileChoice == 0) {
+                    System.out.println("Encerrando o programa.");
+                    sc.close();
+                    return;
+                }
 
                 grafo = criarGrafo(fileChoice, params);
                 if (grafo != null) {
@@ -21,41 +27,52 @@ public class mainProgram {
             }
 
             int k = params[0];
-            int qntVertices = params[1];
-            int qntArestas = params[2];
+            // int qntVertices = params[1];
+            // int qntArestas = params[2];
 
-            // Pergunta ao usuário qual solução deseja executar
             System.out.println("Escolha o tipo de solução:");
             System.out.println("1 - Solução Exata");
             System.out.println("2 - Solução Aproximada (Algoritmo de Gonzalez)");
+            System.out.println("----------------------------------------------");
+            System.out.println("0 - Encerrar o programa");
             System.out.print("Opção: ");
             int opcao = Integer.parseInt(sc.nextLine());
             System.out.println();
 
-            // Calcula Floyd-Warshall (necessário para ambas as soluções)
+            // matriz de distâncias pra ambas as soluções
             int[][] dist = grafo.getMatrizAdjacencia();
             utils.floydWarshall(dist);
 
             int[] centers = null;
-            long startTime = System.currentTimeMillis();
+            long startTime = 0;
+            long endTime = 0;
 
             if (opcao == 1) {
                 // Solução Exata
-                BigInteger totalCombinations = utils.nCr(qntVertices, k);
-                System.out.println("Total de combinações de " + k + " centros entre " + qntVertices + " vértices: "
-                        + totalCombinations + "\n");
 
+                // BigInteger totalCombinations = utils.nCr(qntVertices, k);
+                // System.out.println("Total de combinações de " + k + " centros entre " + qntVertices + " vértices: " + totalCombinations + "\n");
+
+                System.out.println("Executando solução exata...");
+                startTime = System.currentTimeMillis();
                 centers = exactSolution.solveKCenterExact(dist, k);
+                endTime = System.currentTimeMillis();
             } else if (opcao == 2) {
                 // Solução Aproximada
+                System.out.println("Executando solução aproximada...");
+                startTime = System.currentTimeMillis();
                 centers = approximateSolution.solveKCenterApproximate(dist, k);
-            } else {
-                System.out.println("Opção inválida!");
+                endTime = System.currentTimeMillis();
+            } else if (opcao == 0) {
+                System.out.println("Encerrando o programa.");
+                sc.close();
+                return;
+            } 
+            else {
+                System.out.println("Opção inválida.");
                 sc.close();
                 return;
             }
-
-            long endTime = System.currentTimeMillis();
 
             System.out.print("Centros escolhidos: ");
             for (int c : centers) {
@@ -82,7 +99,7 @@ public class mainProgram {
                 return null;
             }
             System.out.println("Arquivo encontrado: " + arq);
-            System.out.println("Carregando grafo...");
+            // System.out.println("Carregando grafo...");
 
             Scanner sc_arq = new Scanner(file);
             String header = sc_arq.nextLine().trim();
@@ -109,7 +126,7 @@ public class mainProgram {
             }
             sc_arq.close();
 
-            System.out.println("Grafo carregado com sucesso.");
+            // System.out.println("Grafo carregado com sucesso.");
             System.out.println("\nNúmero de vértices: " + qntVertices);
             System.out.println("Número de arestas: " + qntArestas);
             System.out.println("Valor de k: " + k + "\n");
