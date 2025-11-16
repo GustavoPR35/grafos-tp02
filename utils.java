@@ -33,7 +33,7 @@ public class utils {
         for (int v = 0; v < n; v++) {
             int minDist = Integer.MAX_VALUE;
             for (int c : centers)
-                minDist = Math.min(minDist, dist[v][c]);
+                minDist = Math.min(minDist, dist[v][c-1]);
             radius = Math.max(radius, minDist);
         }
 

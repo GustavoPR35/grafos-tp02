@@ -26,8 +26,8 @@ public class approximateSolution {
             minDistToCenter[i] = Integer.MAX_VALUE;
         }
 
-        // Escolhe o primeiro centro arbitrariamente (vértice 0)
-        centers[0] = 0;
+        // Escolhe o primeiro centro arbitrariamente (vértice 1)
+        centers[0] = 1;
         isCenter[0] = true;
 
         // Atualiza as distâncias mínimas com base no primeiro centro
